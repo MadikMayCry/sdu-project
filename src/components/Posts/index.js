@@ -48,7 +48,7 @@ const IconText = ({ type, text }) => (
   </span>
 );
 
-class App extends Component {
+class Posts extends Component {
   constructor(props) {
     super(props);
 
@@ -89,22 +89,15 @@ class App extends Component {
           pageSize: 5
         }}
         dataSource={this.state.currentData}
-        // dataSource={listData}
         renderItem={item => (
           <List.Item
             key={item.title}
             actions={[
               <IconText type="star-o" text="156" key="list-vertical-star-o" />,
-              <IconText type="like-o" text="156" key="list-vertical-like-o" />,
-              <IconText type="message" text="2" key="list-vertical-message" />
+              <IconText type="message" text="2" key="list-vertical-message" />,
+              <IconText type="user" text={item.author} key="list-vertical-message" />
             ]}
-            extra={
-              <img
-                width={272}
-                alt="logo"
-                src={item.image}
-              />
-            }
+            extra={<img width={272} alt="logo" src={item.image} />}
           >
             <List.Item.Meta
               avatar={<Avatar src={item.avatar} />}
@@ -171,7 +164,7 @@ class App extends Component {
   };
 
   getData = async () => {
-    await axios.get(`data.json`).then(res =>
+    await axios.get(`https://raw.githubusercontent.com/MadikMayCry/sdu-project/master/public/data.json`).then(res =>
       this.setState({
         data: res.data
       })
@@ -201,4 +194,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Posts;
