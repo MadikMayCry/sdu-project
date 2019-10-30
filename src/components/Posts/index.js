@@ -19,7 +19,8 @@ import {
   Divider,
   Descriptions,
   Tag,
-  Tooltip
+  Tooltip,
+  List
 } from "antd";
 
 const { SubMenu } = Menu;
@@ -27,7 +28,27 @@ const { SubMenu } = Menu;
 const { Meta } = Card;
 const { Header, Content, Footer, Sider } = Layout;
 
-class App extends Component {
+const listData = [];
+for (let i = 0; i < 23; i++) {
+  listData.push({
+    href: "/post",
+    title: `ant design part ${i}`,
+    avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
+    description:
+      "Ant Design, a design language for background applications, is refined by Ant UED Team.",
+    content:
+      "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently."
+  });
+}
+
+const IconText = ({ type, text }) => (
+  <span>
+    <Icon type={type} style={{ marginRight: 8 }} />
+    {text}
+  </span>
+);
+
+class Posts extends Component {
   constructor(props) {
     super(props);
 
@@ -56,6 +77,39 @@ class App extends Component {
     );
   };
 
+  listPosts = () => {
+    return (
+      <List
+        itemLayout="vertical"
+        size="large"
+        pagination={{
+          onChange: page => {
+            console.log(page);
+          },
+          pageSize: 5
+        }}
+        dataSource={this.state.currentData}
+        renderItem={item => (
+          <List.Item
+            key={item.title}
+            actions={[
+              <IconText type="star-o" text="156" key="list-vertical-star-o" />,
+              <IconText type="message" text="2" key="list-vertical-message" />,
+              <IconText type="user" text={item.author} key="list-vertical-message" />
+            ]}
+            extra={<img width={272} alt="logo" src={item.image} />}
+          >
+            <List.Item.Meta
+              avatar={<Avatar src={item.avatar} />}
+              title={<a href={item.href}>{item.title}</a>}
+              description={item.description}
+            />
+            {item.content}
+          </List.Item>
+        )}
+      />
+    );
+  };
   posts = () =>
     this.state.currentData.map((item, index) => (
       <Col span={8} className="user-post-wrapper" key={index} id={item.id}>
@@ -110,7 +164,7 @@ class App extends Component {
   };
 
   getData = async () => {
-    await axios.get(`data.json`).then(res =>
+    await axios.get(`https://raw.githubusercontent.com/MadikMayCry/sdu-project/master/public/data.json`).then(res =>
       this.setState({
         data: res.data
       })
@@ -131,11 +185,13 @@ class App extends Component {
           </Menu>
         </Sider>
         <Content style={{ padding: "0 24px", minHeight: 280 }}>
-          <Row>{this.state.loading ? <div>Loading...</div> : this.posts()}</Row>
+          <Row>
+            {this.state.loading ? <div>Loading...</div> : this.listPosts()}
+          </Row>
         </Content>
       </>
     );
   }
 }
 
-export default App;
+export default Posts;
