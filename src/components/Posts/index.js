@@ -164,7 +164,7 @@ class Posts extends Component {
   };
 
   getData = async () => {
-    await axios.get(`https://raw.githubusercontent.com/MadikMayCry/sdu-project/master/public/data.json`).then(res =>
+    await axios.get(`data.json`).then(res =>
       this.setState({
         data: res.data
       })
