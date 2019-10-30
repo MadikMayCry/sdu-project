@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 
 import { Link } from "react-router-dom";
+import "./App.css";
 
 import "antd/dist/antd.css";
 import {
@@ -47,27 +48,30 @@ class App extends Component {
   changeFaculty = props => {
     let tempFac = props.key;
 
-    this.setState({
-      activeFaculty: tempFac
-    });
+    this.setState(
+      {
+        activeFaculty: tempFac
+      },
+      this.sortByFaculty
+    );
   };
 
   posts = () =>
     this.state.currentData.map((item, index) => (
-      <Col span={6} className="user-post-wrapper" key={index} id={item.id}>
+      <Col span={8} className="user-post-wrapper" key={index} id={item.id}>
         <Card
           style={{ margin: "10px" }}
           className="user-post"
           cover={<img alt={item.title} src={item.image} />}
           actions={[
             <Tooltip title="Response">
-              <Button type="link" shape="round" icon="plus">
-                Response
-              </Button>
+              <Button type="link" shape="round" icon="like"></Button>
+            </Tooltip>,
+            <Tooltip title="Response">
+              <Button type="link" shape="round" icon="plus"></Button>
             </Tooltip>,
             <Tooltip title="Details">
               <Button type="link">
-                Details
                 <Icon type="right" />
               </Button>
             </Tooltip>
@@ -119,7 +123,7 @@ class App extends Component {
         <Sider width={"auto"} style={{ background: "#fff" }}>
           <Menu
             mode="inline"
-            defaultSelectedKeys={["1"]}
+            defaultSelectedKeys={this.state.activeFaculty}
             defaultOpenKeys={["sub1"]}
             style={{ height: "100%" }}
           >
