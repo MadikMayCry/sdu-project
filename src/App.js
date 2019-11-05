@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Posts from "./components/Posts";
 import About from "./components/About";
+import Users from "./components/Users";
 
 import "antd/dist/antd.css";
 import {
@@ -36,24 +37,28 @@ class App extends Component {
                 <Link to="/">Home</Link>
               </Menu.Item>
               <Menu.Item key="2">
+                <Link to="/users">Users</Link>
+              </Menu.Item>
+              <Menu.Item key="3">
                 <Link to="/about">About</Link>
               </Menu.Item>
             </Menu>
           </Header>
-          <Content style={{ padding: "0 50px" }}>
-            <Layout style={{ padding: "24px 0", background: "#fff" }}>
-              <Switch>
-                <Route exact path="/">
-                  <Posts />
-                </Route>
-                <Route path="/about">
-                  <About />
-                </Route>
-              </Switch>
-            </Layout>
+          <Content style={{ padding: "0 50px", minHeight: "85vh" }}>
+            <Switch>
+              <Route exact path="/">
+                <Posts />
+              </Route>
+              <Route path="/about">
+                <About />
+              </Route>
+              <Route path="/users">
+                <Users />
+              </Route>
+            </Switch>
           </Content>
           <Footer style={{ textAlign: "center" }}>
-            Ant Design ©2018 Created by Ant UED
+            Ant Design ©2018 Created by Madiyar Kuttymbekov
           </Footer>
         </Layout>
       </Router>
