@@ -1,59 +1,51 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Posts from "./components/Posts";
-import About from "./components/About";
+import Testing from "./components/Testing";
 import Users from "./components/Users";
+import PageHeader from "./components/PageHeader";
 
 import "antd/dist/antd.css";
-import {
-  Layout,
-  Menu,
-  Button,
-  Breadcrumb,
-  Icon,
-  Card,
-  Avatar,
-  Row,
-  Anchor,
-  Divider,
-  Descriptions,
-  Tag,
-  Tooltip
-} from "antd";
+import { Layout, Menu } from "antd";
+import SortingTable from "./components/SortingTable";
+import SideBar from "./components/SideBar";
 
 const { SubMenu } = Menu;
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Footer, Sider } = Layout;
+
+export const User = React.createContext();
 
 class App extends Component {
+  state = {
+    user: {
+      name: "Madiyar"
+    }
+  };
+
   render() {
     return (
       <Router>
         <Layout>
-          <Header className="header">
-            <div className="logo" />
-            <Menu theme="dark" mode="horizontal" style={{ lineHeight: "64px" }}>
-              <Menu.Item key="1">
-                <Link to="/">Home</Link>
-              </Menu.Item>
-              <Menu.Item key="2">
-                <Link to="/users">Users</Link>
-              </Menu.Item>
-              <Menu.Item key="3">
-                <Link to="/about">About</Link>
-              </Menu.Item>
-            </Menu>
-          </Header>
+          <User.Provider value={this.state}>
+            <PageHeader />
+          </User.Provider>
           <Content style={{ padding: "0 50px", minHeight: "85vh" }}>
             <Switch>
               <Route exact path="/">
                 <Posts />
               </Route>
-              <Route path="/about">
-                <About />
+              <Route path="/Testing">
+                <Testing />
               </Route>
               <Route path="/users">
                 <Users />
+              </Route>
+              <Route path="/sorting-table">
+                <SortingTable />
+              </Route>
+              <Route path="/sidebar">
+                <SideBar />
               </Route>
             </Switch>
           </Content>
