@@ -1,0 +1,25 @@
+[
+  {
+    "title": "Sidebar Onse",
+    "key": 3
+  },
+  {
+    "title": "Sidebar Two",
+    "key": 2,
+
+    "children": [
+      {
+        "title": "Child 21",
+        "key": 21
+      },
+      {
+        "title": "Child 22",
+        "key": 22
+      },
+      {
+        "title": "Child 23",
+        "key": 23
+      }
+    ]
+  }
+]
