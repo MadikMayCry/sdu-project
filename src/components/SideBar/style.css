@@ -1,0 +1,26 @@
+.breadcrumb-wrapper {
+  display: flex;
+}
+
+.breadcrumb-wrapper div {
+  margin-right: 5px;
+  position: relative;
+}
+
+.breadcrumb-wrapper div:after {
+  content: "/";
+  right: -2.5px;
+  position: relative;
+}
+
+ul ,li {
+  cursor: pointer;
+}
+
+ul.collapsed {
+  max-height: 0px;
+  overflow: hidden;
+}
+
+/* ./mvnw  */
+/* Запуск проекта, Бэк */

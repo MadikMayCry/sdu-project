@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MenuList from "./data.json";
-import { Menu, Breadcrumb } from "antd";
-
-const { SubMenu } = Menu;
+import "./style.css";
 
 function SideBar() {
   const [bread, setBread] = useState(["Home"]);
+  const [openKeys, setOpenKeys] = useState([]);
 
   const isLi = (data, key, title, myarr) => {
     for (let i = 0; i < data.length; i++) {
@@ -20,43 +19,47 @@ function SideBar() {
       }
     }
   };
-
   const RenderSidebar = data =>
     data.map(item => {
       if (!item.children) {
         return (
-          <Menu.Item
+          <li
+            role="menuitem"
             key={item.key}
             onClick={() => {
               isLi(MenuList, item.key, item.title, []);
             }}
           >
             {item.title}
-          </Menu.Item>
+          </li>
         );
       }
       return (
-        <SubMenu
-          key={item.key}
-          title={item.title}
-          onTitleClick={() => {
-            isLi(MenuList, item.key, item.title, []);
-          }}
-        >
-          {RenderSidebar(item.children)}
-        </SubMenu>
+        <>
+          <li
+            role="menuitem"
+            key={item.key}
+            onClick={() => {
+              isLi(MenuList, item.key, item.title, []);
+              setOpenKeys({ [item.key]: !openKeys[item.key] });
+            }}
+          >
+            {item.title}
+          </li>
+          <ul className={openKeys[item.key] ? "open" : "collapsed"}>
+            {RenderSidebar(item.children)}
+          </ul>
+        </>
       );
     });
   return (
     <>
-      <Menu style={{ width: 256 }} mode="inline">
-        {MenuList && RenderSidebar(MenuList)}
-      </Menu>
-      <Breadcrumb>
+      <ul>{MenuList && RenderSidebar(MenuList)}</ul>
+      <div className="breadcrumb-wrapper">
         {bread.map(item => (
-          <Breadcrumb.Item>{item}</Breadcrumb.Item>
+          <div>{item}</div>
         ))}
-      </Breadcrumb>
+      </div>
     </>
   );
 }
